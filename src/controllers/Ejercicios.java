@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.HashMap;
 
+
 public class Ejercicios {
 
     /**
@@ -21,14 +22,37 @@ public class Ejercicios {
      * Output: false
      * Explicación: Las cadenas tienen diferentes caracteres.
      *
-     * Ejemplo 3:
+     * Ejemplo 3:D
      * Input: str1 = "triangle", str2 = "integral"
      * Output: true
      * Explicación: Ambas cadenas tienen los mismos caracteres con la misma
      * frecuencia.
      */
+
     public static boolean areAnagrams(String str1, String str2) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        HashMap<Character, Integer> frecuenciasStr1 = new HashMap<>();
+
+        for (char caracter : str1.toCharArray()) {
+            int conteo = frecuenciasStr1.getOrDefault(caracter, 0);
+            frecuenciasStr1.put(caracter, conteo + 1);
+
+        }
+    
+        for (char caracter : str2.toCharArray()) {
+            if (!frecuenciasStr1.containsKey(caracter)) {
+                return false; 
+
+            }
+    
+            int conteoStr1 = frecuenciasStr1.get(caracter);
+            int conteoStr2 = (int) str2.chars().filter(c -> c == caracter).count();
+    
+            if (conteoStr1 != conteoStr2) {
+                return false; 
+
+            }
+        }
+        return true;
 
     }
 
