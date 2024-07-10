@@ -2,6 +2,8 @@ package controllers;
 
 import java.util.HashMap;
 
+//import javax.xml.stream.events.Characters;
+
 
 public class Ejercicios {
 
@@ -22,38 +24,34 @@ public class Ejercicios {
      * Output: false
      * Explicación: Las cadenas tienen diferentes caracteres.
      *
-     * Ejemplo 3:D
+     * Ejemplo 3:
      * Input: str1 = "triangle", str2 = "integral"
      * Output: true
      * Explicación: Ambas cadenas tienen los mismos caracteres con la misma
      * frecuencia.
      */
 
-    public static boolean areAnagrams(String str1, String str2) {
-        HashMap<Character, Integer> frecuenciasStr1 = new HashMap<>();
+     public static boolean areAnagrams(String str1, String str2) {
 
-        for (char caracter : str1.toCharArray()) {
-            int conteo = frecuenciasStr1.getOrDefault(caracter, 0);
-            frecuenciasStr1.put(caracter, conteo + 1);
-
+        if (str1.length() != str2.length()) {
+            return false;
         }
-    
-        for (char caracter : str2.toCharArray()) {
-            if (!frecuenciasStr1.containsKey(caracter)) {
-                return false; 
 
-            }
-    
-            int conteoStr1 = frecuenciasStr1.get(caracter);
-            int conteoStr2 = (int) str2.chars().filter(c -> c == caracter).count();
-    
-            if (conteoStr1 != conteoStr2) {
-                return false; 
+        HashMap<Character, Integer> claves = new HashMap<>();
+        HashMap<Character, Integer> claves2 = new HashMap<>();
 
-            }
+        // Contar caracteres en str1
+        for (Character character : str1.toCharArray()) {
+            claves.put(character, claves.getOrDefault(character, 0) + 1);
         }
-        return true;
 
+        // Contar caracteres en str2
+        for (Character character : str2.toCharArray()) {
+            claves2.put(character, claves2.getOrDefault(character, 0) + 1);
+        }
+
+        // Comparar los mapas
+        return claves.equals(claves2);
     }
 
     /*
@@ -72,6 +70,14 @@ public class Ejercicios {
      * Output: null
      */
     public int[] sumatoriaDeDos(int[] nums, int objetivo) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int complemento = objetivo - nums[i];
+            if (map.containsKey(complemento)) {
+                return new int[] { map.get(complemento), i };
+            }
+            map.put(nums[i], i);
+        }
+        return null;
     }
 }
